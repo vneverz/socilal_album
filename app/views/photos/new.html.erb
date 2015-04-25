@@ -1,0 +1,18 @@
+<h2>New photo</h2>
+
+<%= form_for @photo, :url => photos_path do |f| %>
+
+  <p>
+    <%= f.label :content %>
+    <%= f.text_field :content %>
+  </p>
+
+  <p>
+    <%= f.label :image %>
+    <%= f.file_field :image %>
+  </p>
+
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>

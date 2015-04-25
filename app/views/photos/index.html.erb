@@ -1,26 +1,10 @@
-<div class="main">
   <div class="container">
-    <div class="row">
-      <nav class="navbar navbar-default">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <div class="col-xs-4 col-md-4">
-            <a class="navbar-brand" href="#">
-               <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-            </a>
-            </div>
-            <div class="col-xs-4 col-md-4">
-            <a class="navbar-brand" href="#">
-              <img alt="Brand" src="..." >
-            </a>
-            </div>
-            <div class="col-xs-4 col-md-4">
-              <button type="button" class="btn btn-default navbar-btn">Sign in</button>
-            </div>
-          </div>
-        </div>
-      </nav>
-      </div>
-    </div>
+      <p><%= link_to "Upload Photo", new_photo_path %></p>
+        <% @photos.each do |photo| %>
+
+        <%= photo.title %>
+      <%= link_to image_tag(photo.image.url(:thumb)), photo.image.url, :target => "_blank"  %><hr>
+    <% end %>
   </div>
 </div>
+ 
