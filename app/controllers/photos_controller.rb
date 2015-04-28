@@ -1,4 +1,7 @@
 class PhotosController < ApplicationController
+
+  before_action :authenticate_user!, :except => [:index]
+
   def index
     @photos = Photo.page(params[:page])
   end
