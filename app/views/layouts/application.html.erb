@@ -26,14 +26,11 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span></a></li>
-           
-              <% if current_user %>Hi, <%= user.username %> 
-            <li><%= link_to('登出', destroy_user_session_path, :method => :delete) %> |</li>
-            <li><%= link_to('修改密碼', edit_registration_path(:user)) %></li>
-              <% else %>
-            <li><%= link_to('註冊', new_registration_path(:user)) %> </li>
-            <li><%= link_to('登入', new_session_path(:user)) %></li>
-              <% end %>
+            <% if current_user %>
+              <%= link_to "登出", auth_signout_path, :method => :post %>
+            <% else %>
+              <%= link_to "Sign in with Facebook", user_omniauth_authorize_path(:facebook) %>
+            <% end %>
             </li>
           </ul>
         </div><!-- /.navbar-collapse -->

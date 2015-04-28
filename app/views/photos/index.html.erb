@@ -1,8 +1,18 @@
   <div class="container">
       <p><%= link_to "Upload Photo", new_photo_path %></p>
+		<h1>Hi!</h1>
+
+		<% if current_user %>
+
+		  已登入: <%= current_user.username %>
+		  <%= image_tag( current_user.fb_image ) %>
+
+		<% else %>
+		  未登入
+		<% end %>
         <% @photos.each do |photo| %>
 
-        <%= photo.title %>
+        <%= photo.content %>
       <%= link_to image_tag(photo.image.url(:thumb)), photo.image.url, :target => "_blank"  %><hr>
     <% end %>
   </div>
