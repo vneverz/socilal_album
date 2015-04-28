@@ -11,5 +11,9 @@ class Photo < ActiveRecord::Base
   def find_like_by_user(user)
     user && self.likes.where( :user_id => user.id ).last
   end
-  
+
+  # def can_edit_by_user?(user)  
+  # 	user && ( self.user == user || user.is_admin? )
+  # end
+
 end

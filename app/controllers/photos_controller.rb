@@ -1,5 +1,5 @@
 class PhotosController < ApplicationController
-
+  
   before_action :authenticate_user!, :except => [:index]
 
   def index
@@ -10,8 +10,11 @@ class PhotosController < ApplicationController
   # def new
   #  @photo = Photo.new
   # end
+
   def create
     @photo = Photo.new( photo_params )
+    
+    @photo.creator = current_user
 
     if @photo.save
       redirect_to root_url

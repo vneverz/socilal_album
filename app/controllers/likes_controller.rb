@@ -4,7 +4,12 @@ class LikesController < ApplicationController
   
 	def create
     photo = Photo.find( params[:photo_id] )
-    Like.create( :user => current_user, :photo => photo)
+
+    # 要先判斷這個like是否有被按過
+    like = photo.find_like_by_user(current_user)
+    unless like
+      Like.create( :user => current_user, :photo => photo)
+    end
 
     redirect_to :back
   end

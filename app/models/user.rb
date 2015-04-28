@@ -6,8 +6,8 @@ class User < ActiveRecord::Base
   has_many :photos
   devise :omniauthable, :omniauth_providers => [:facebook]
 
-  def to_params
-  	self.username 	
+  def is_admin?
+  	self.role == "admin"
   end
 
   def self.from_omniauth(auth)

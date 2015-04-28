@@ -1,6 +1,6 @@
   <div class="container text-center" >
       <p>
-		<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">			<%=  "Upload Photo"%>
+		<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">			<%= "Upload Photo"%>
 		</button>
       </p>
 
@@ -16,9 +16,8 @@
 
 		  <p>
 		    <%= f.label :content %>
-		    <%= f.text_field :content , :rows => "10"  %>
-		  </p>
-
+		   </p>
+		    <%= f.text_area(:content, size: '50x10') %>
 		  <p>
 		    <%= f.label :image %>
 		    <%= f.file_field :image %>
@@ -34,13 +33,16 @@
   </div>
 </div>
 
-        <% @photos.each do |photo| %>
-        <%= photo.content %>
+    <% @photos.each do |photo| %>
+
       <%= link_to image_tag(photo.image.url(:medium)),photo.image.url, :target => "_blank"  %>
-		Likes: <%= photo.likes_count %>
+      
+      <p><%= photo.content %></p>
+
+	   	Likes: <%= photo.likes_count %>
 
 		  <% photo.like_users.each do |u| %>
-		    <%= link_to u.username%>
+		    <%= link_to u.username, user_path(u) %>
 		  <% end %>
 			
 		  <% like = photo.find_like_by_user(current_user) %>
@@ -51,6 +53,9 @@
 		   <%= link_to "+1", photo_likes_path(photo), :method => :post %>
 		  <% end %>
 
+<!--         <%#if photo.can_edit_by_user?(current_user) %>
+          Delete Photo
+        <%#end %> -->
       <hr>
     <% end %>
   </div>
