@@ -1,13 +1,46 @@
-  <div class="container">
-      <p><%= link_to "Upload Photo", new_photo_path %></p>
-		<h1>Hi!</h1>
+  <div class="container text-center" >
+      <p>
+		<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">			<%=  "Upload Photo"%>
+		</button>
+      </p>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog text-left">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">New Photo</h4>
+      </div>
+      <div class="modal-body">
+		<%= form_for @photo, :url => photos_path do |f| %>
+
+		  <p>
+		    <%= f.label :content %>
+		    <%= f.text_field :content , :rows => "10"  %>
+		  </p>
+
+		  <p>
+		    <%= f.label :image %>
+		    <%= f.file_field :image %>
+		  </p>
+		
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <%= f.submit class: "btn btn-info" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
         <% @photos.each do |photo| %>
         <%= photo.content %>
-      <%= link_to image_tag(photo.image.url(:thumb)), photo.image.url, :target => "_blank"  %>
+      <%= link_to image_tag(photo.image.url(:medium)),photo.image.url, :target => "_blank"  %>
 		Likes: <%= photo.likes_count %>
 
 		  <% photo.like_users.each do |u| %>
-		    <%= link_to u.name, user_path(u) %>
+		    <%= link_to u.username%>
 		  <% end %>
 			
 		  <% like = photo.find_like_by_user(current_user) %>

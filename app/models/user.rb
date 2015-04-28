@@ -6,12 +6,17 @@ class User < ActiveRecord::Base
   has_many :photos
   devise :omniauthable, :omniauth_providers => [:facebook]
 
+  def to_params
+  	self.username 	
+  end
+
   def self.from_omniauth(auth)
 	  where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
 	    user.email = auth.info.email
 	    user.password = Devise.friendly_token[0,20]
 	    user.username = auth.info.name   # assuming the user model has a name
 	    user.fb_image = auth.info.image # assuming the user model has an image
+	    user.fb_uid = auth.info.fb_uid # assuming the user model has an uid
 	  end
 	end
 	def self.new_with_session(params, session)

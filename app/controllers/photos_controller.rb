@@ -4,13 +4,14 @@ class PhotosController < ApplicationController
 
   def index
     @photos = Photo.page(params[:page])
+    @photo = Photo.new
   end
-  def new
-   @photo = Photo.new
-  end
+  # add to pop up
+  # def new
+  #  @photo = Photo.new
+  # end
   def create
     @photo = Photo.new( photo_params )
-    @photo.user = current_user
 
     if @photo.save
       redirect_to root_url
