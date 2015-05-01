@@ -2,22 +2,35 @@ class LikesController < ApplicationController
 
   before_action :authenticate_user!
   
-	def create
-    photo = Photo.find( params[:photo_id] )
+	  def create
+    @photo = Photo.find( params[:photo_id] )
 
-    # 要先判斷這個like是否有被按過
-    like = photo.find_like_by_user(current_user)
-    unless like
-      Like.create( :user => current_user, :photo => photo)
+    existing_like = @photo.find_like_by_user(current_user)
+    unless existing_like
+      @like = Like.create( :user => current_user, :photo => @photo)
     end
 
-    redirect_to :back
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js {
+        @photo.reload
+        render :template => "likes/reload"
+      }
+    end
   end
 
   def destroy
-    like = current_user.likes.find( params[:id] )
-    like.destroy
+    @photo = Photo.find( params[:photo_id] )
+    @like = current_user.likes.find( params[:id] )
+    @like.destroy
+    @like = nil
 
-    redirect_to :back
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.js {
+        @photo.reload
+        render :template => "likes/reload"
+      }
+    end
   end
 end
